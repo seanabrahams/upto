@@ -1,0 +1,13 @@
+Upto
+
+Keep _everyone_ in your organization _up to_ date. Simple and useful.
+
+Features:
+- View what everyone in your organization is doing at anytime.
+- Prevent unnecessary interruptions.
+- View what anyone has recently finished doing.
+- See who's available and who's not.
+
+Implementation
+
+Using Google App Engine and requires google account. http://upto.appspot.com

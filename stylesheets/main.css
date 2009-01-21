@@ -1,0 +1,86 @@
+/* RESET */
+html,body,div,ul,ol,li,dl,dt,dd,h1,h2,h3,h4,h5,h6,pre,form,p,blockquote,fieldset,input { margin: 0; padding: 0; }
+h1,h2,h3,h4,h5,h6,pre,code,address,caption,cite,code,em,strong,th { font-size: 1em; font-weight: normal; font-style: normal; }
+ul,ol { list-style: none; }
+fieldset,img { border: none; }
+caption,th { text-align: left; }
+table { border-collapse: collapse; border-spacing: 0; }
+
+body { 
+  font: 11px/18px "Lucida Grande", Geneva, Arial, Verdana, sans-serif; background-color:#fff; color:#333;
+  padding: 0px 10px 10px 10px;
+}
+
+h3 { color: #444; font-weight: bold; }
+h2 { font-size: 36px; margin-top: 10px; margin-bottom: 10px;}
+
+a:link,
+a:visited { color: #777; text-decoration: none; }
+a:hover { color: #333 !important; text-decoration: none !important; }
+
+ul { margin-bottom: 18px; list-style: none outside; }
+ol { margin-bottom: 18px; list-style: decimal; margin-left: 2.2em; }
+blockquote { margin-bottom: 10px; }
+
+#header #breadcrumbs { font-size: 12px; color: #444; height: 36px; line-height: 34px; font-weight: bold; border-bottom: 1px solid #e5e5e5;  }
+
+#nav { float: left; width: 18%; position: relative; margin-top: 0px; height: 100%;}
+
+#content {
+  margin-left: 22%;
+}
+
+#status {
+  padding-bottom: 20px;
+}
+
+#actions li {
+  padding-bottom: 20px;
+}
+
+#colleagues .colleague h4 {
+  color: purple;
+}
+
+#colleagues .colleague .colleague_status {
+  font-size: 16px;
+}
+
+#colleagues .colleague .colleague_status_time_ago {
+  display: block;
+}
+
+#colleagues .colleague ul {
+  border-top: 1px dotted #333;
+  list-style: disc inside;
+}
+
+.time_ago_in_words {
+  color: #999;
+  font-size: 11px;
+}
+
+.hidden { display: none; }
+
+form {
+  padding-bottom: 20px;
+}
+textarea {
+  margin-bottom: 10px;
+}
+
+#links li {
+  margin-bottom: 10px;
+}
+
+.notice {
+	padding: 10px; 
+	background: #ffc; 
+	border: 1px solid #ff9;
+}
+
+.error {
+  padding: 2px; 
+	background: #ffebe8; 
+	border: 1px solid #DD3C10;
+}

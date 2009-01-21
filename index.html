@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Upto</title>
+  <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  <script type="text/javascript">		
+		function toggleNewColleagueForm() {
+		  if (document.getElementById('new_colleague_form').style.display != 'block') {
+		    document.getElementById('new_colleague_form').style.display = 'block';
+		  } else {
+        document.getElementById('new_colleague_form').style.display = 'none';
+		  }
+		}
+		
+		function handleErrors() {
+		  
+		  if ( getParameter('invalid_email') == 'true' ) {
+		    document.getElementById('new_colleague_form').style.display = 'block';
+		    document.getElementById('invalid_email_error').style.display = 'block';
+		  }
+		  
+		}
+		
+		function handleMessages() {
+		  
+		  if ( getParameter('colleague_request_sent') == 'true' ) {
+		    document.getElementById('colleague_request_sent').style.display = 'block';
+		  }
+		  
+		}
+		
+		/* Copyright (c) 2007 Marlin Forbes (http://www.datashaman.com)
+     * Dual licensed under the MIT
+     * (http://www.opensource.org/licenses/mit-license.php)
+     * and GPL
+     * (http://www.opensource.org/licenses/gpl-license.php) licenses.
+     */
+    /* function setupParameters
+     * Creates an object property window.location.parameters which
+     * is an associative array of the URL querystring parameters used
+     * when requesting the current document.
+     * If the parameter is present but has no value, such as the parameter
+     * flag in http://example.com/index.php?flag&id=blah, null is stored.
+     */
+    function setupParameters() {
+    	var parameters = new Object();
+    	if(window.location.search) {
+    		var paramArray = window.location.search.substr(1).split('&');
+    		var length = paramArray.length;
+    		for (var index = 0;index <length; index++ ) {
+    			var param = paramArray[index].split('=');
+    			var name = param[0];
+    			var value =
+    				typeof param[1] == "string"
+    				? decodeURIComponent(param[1].replace(/\+/g, ' '))
+    				: null;
+    			parameters[name] = value;
+    		}
+    	}
+    	window.location.parameters = parameters;
+    }
+		
+		function getParameter(name) {
+    	if(typeof window.location.parameters == "undefined")
+    		setupParameters();
+    	return window.location.parameters[name];
+    }
+	</script>
+</head>
+
+	<body>
+		<div id="header">
+				<div id="breadcrumbs"><a href="/" class="home">Upto</a></div>
+		</div>
+		
+		<div id="nav">		 
+		  <div id="colleagues"> 
+  			<h3>Colleagues</h3>
+  			  {% for colleague in author.colleagues %}
+  			  <div class="colleague">
+    			  <h4>{{ colleague.colleague.user.nickname }}</h4>
+    			  <span class="colleague_status">
+    			    {{ colleague.colleague.status }}
+    			  </span>
+  			    <span class="colleague_status_time_ago">
+  			    {{ colleague.colleague.status.created_at|timesince }} ago
+  			    </span>
+  			    
+    			  <ul>
+    			    {% for action in colleague.colleague.actions %}
+    			      <li>{{ action.content }}</li>
+    			    {% endfor %}
+    			  </ul>
+    			</div>
+    			{% endfor %}
+  			</ul>
+  		</div>
+						
+			<p>
+			  <a href="#" onclick="toggleNewColleagueForm();">New Colleague</a>
+			</p>
+			
+			<div id="new_colleague_form" class="hidden">
+			  <p>
+			    Enter your colleague's GMail address...
+			  </p>
+			  <div id="invalid_email_error" class="error hidden">
+			    <p>Invalid Email. It must be a GMail address (someone@gmail.com).</p>
+			  </div>
+			  <form action="/colleague" method="post">
+          <input type="text" name="email" />
+          <div><input type="submit" value="Send" /></div>
+        </form>
+      </div>
+      
+      <p>
+			  <a href="http://groups.google.com/group/upto">Discuss</a>
+			</p>
+			
+			<h3><a href="{{ url }}">{{ url_linktext }}</a></h3>
+		</div>
+		
+		<div id="content">
+		  <div id="colleague_request_sent" class="notice hidden">
+		    <p>Colleague Request sent.</p>
+		  </div>
+		  
+		  <div id="colleague_confirmed" class="notice hidden">
+		    <p>Colleague Confirmed.</p>
+		  </div>
+		  
+		  <div id="colleague_denied" class="notice hidden">
+		    <p>Colleague Denied.</p>
+		  </div>
+		  
+		  {% if author.has_colleague_requests %}
+		    <h3>Colleague Requests</h3>
+		    {% for colleague in author.colleague_requests %}
+  		    <p>
+  		      {{ colleague.user.user.email }} wishes to be your Upto Colleague: <a href="/colleague_confirm/?id={{ colleague.key }}">Confirm</a> | <a href="/colleague_deny/?id={{ colleague.key }}">Deny</a>
+  		    </p>
+  		  {% endfor %}
+		  {% endif %}
+		  
+		  <div id="status">
+		    {% if author.status.content %}
+		    <h2>{{ author.status.content }} <span class="time_ago_in_words">{{ author.status.created_at|timesince }} ago</span></h2>
+		    {% endif %}
+		  </div>
+		  
+			<h3>What are you upto?</h3>
+			<div id="status_form">
+  			<form action="/status" method="post">
+    			<input type="hidden" name="type" value="Status" />
+        	<div><textarea name="content" rows="3" cols="60"></textarea></div>
+          <div><input type="submit" value="Save" /></div>
+        </form>
+      </div>
+      
+      <h3><label for="content">What have you finished being upto?</label></h3>
+      <div id="action_form">
+        <form action="/action" method="post">
+    			<input type="hidden" name="type" value="Action" />
+          <input type="text" name="content" size="50" /> <input type="submit" value="Save" />
+        </form>
+      </div>
+      
+      <div id="actions">
+        <ul>
+          {% for action in author_actions %}
+    			  <li>{{ action.content }}</li>
+    			{% endfor %}
+        </ul>        
+      </div>
+      
+		</div> <!-- End of content -->
+
+    <script type="text/javascript">
+      handleErrors();
+      handleMessages();
+    </script>
+    
+	</body>
+</html>
